@@ -22,18 +22,49 @@
  *    with the string you added to the array, but a broken image.
  * 
  */
+let titles = []
+let filteredTeams;
 
-// Your final submission should have much more data than this, and 
-// you should use more than just an array of strings to store it all.
+function showCards1(nbaTeams) {
+    const cardContainer = document.getElementById("card-container");
+    //cardContainer.innerHTML = ""; // Clear previous content
+    while (cardContainer.firstChild) {
+        cardContainer.removeChild(cardContainer.firstChild);
+    }
+    const templateCard = document.querySelector(".card");
+    // Loop through each NBA team and create a card for it
+    console.log(nbaTeams);
+    for (let i = 0; i < nbaTeams.length; i++)
+    {
+        let title = nbaTeams[i].name;
 
+        // This part of the code doesn't scale very well! After you add your
+        // own data, you'll need to do something totally different here.
+        let imageURL = "";
+        imageURL = nbaTeams[i].imageURL;
 
+        let championships = "";
+        championships = nbaTeams[i].championships;
+
+        let conference = "";
+        conference = nbaTeams[i].conference;
+        console.log(conference);
+        let division = "";
+        division = nbaTeams[i].division;
+
+        const nextCard = templateCard.cloneNode(true); // Copy the template card
+        editCardContent(nextCard, title, imageURL,championships,conference,division); // Edit title and image
+        cardContainer.appendChild(nextCard); // Add new card to the container
+        
+    }
+}
 // This function adds cards the page to display the data in the array
 function showCards() {
     fetch('teams.json')
         .then(response => response.json())
         .then(json => {
         // Assign the fetched JSON data to the titles object array
-            let titles = json
+            titles = json
             
             const cardContainer = document.getElementById("card-container");
             cardContainer.innerHTML = "";
@@ -65,13 +96,13 @@ function showCards() {
             editCardContent(nextCard, title, imageURL,championships,conference,division); // Edit title and image
             cardContainer.appendChild(nextCard); // Add new card to the container
     }
-        // Call a function to display or process the fetched data as needed
+
     })
     .catch(error => {
         console.error('Error fetching teams data:', error);
     });
 
-    console.log(titles);
+   // console.log(titles);
     
 }
 
@@ -96,8 +127,13 @@ function editCardContent(card, newTitle, newImageURL,newChampionship,newConferen
     // You can use console.log to help you debug!
     // View the output by right clicking on your website,
     // select "Inspect", then click on the "Console" tab
-    console.log("new card:", newChampionship, "- html: ", card);
+   // console.log("new card:", newChampionship, "- html: ", card);
 }
+
+
+
+//const conferenceFilter = document.getElementById("conference-filter");
+//conferenceFilter.addEventListener("DOMContentLoaded", handleConferenceFilter);
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", showCards);
@@ -106,8 +142,9 @@ function quoteAlert() {
     console.log("Button Clicked!")
     alert("I'm a Celtics fan");
 }
-
+/*
 function removeLastCard() {
     titles.pop(); // Remove last item in titles array
     showCards(); // Call showCards again to refresh
 }
+*/
